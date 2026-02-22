@@ -39,6 +39,11 @@ public class TravelController : Controller
         return RedirectToAction("Index");
     }
 
+    [HttpGet("/Travel/LoginCommunity")]
+    public IActionResult LoginCommunity()
+    {
+        return View("LoginCommunity");
+    }
 
 
     public IActionResult Index()

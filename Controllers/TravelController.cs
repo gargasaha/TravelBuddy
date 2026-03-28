@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TravelBuddy.Models;
+using TravelBuddy.Repository;
 
 namespace TravelBuddy.Controllers;
 
@@ -8,12 +9,12 @@ public class TravelController : Controller
 {
     private readonly ILogger<TravelController> _logger;
     private readonly IConfiguration _configuration;
-    private TravelDAL travelDAL;
+    private TravelRepository travelDAL;
     public TravelController(ILogger<TravelController> logger, IConfiguration configuration)
     {
         _logger = logger;
         _configuration = configuration;
-        travelDAL=new TravelDAL(_configuration);
+        travelDAL=new TravelRepository(_configuration);
     }
     [HttpGet("/Travel/CreateCommunity")]
     public IActionResult CreateCommunity()

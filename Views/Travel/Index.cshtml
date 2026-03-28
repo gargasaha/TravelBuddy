@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    Layout = null;
+    Layout=null;
 }
 
 <!DOCTYPE html>
@@ -10,70 +10,49 @@
     <title>TravelBuddy - Ride Together</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap -->
+    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- AOS -->
+    <!-- AOS Animation -->
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
-    <!-- Fonts -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #0f0f0f;
             color: white;
+            scroll-behavior: smooth;
         }
 
-        /* NAVBAR */
         .navbar {
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
         }
 
         .navbar-brand {
             font-weight: 700;
-            font-size: 22px;
+            font-size: 24px;
             color: #ff6a00 !important;
         }
 
-        .navbar-toggler {
-            border: none;
-        }
-
-        /* HERO */
         .hero {
-            min-height: 100vh;
-            padding: 120px 15px 80px;
+            height: 100vh;
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
-            url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429') center/cover no-repeat;
+            url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429') center/cover;
             display: flex;
             align-items: center;
             text-align: center;
         }
 
         .hero h1 {
-            font-size: clamp(28px, 6vw, 56px);
+            font-size: 3.5rem;
             font-weight: 700;
-        }
-
-        .hero p {
-            font-size: clamp(14px, 3vw, 20px);
         }
 
         .highlight {
@@ -83,138 +62,109 @@
         .btn-main {
             background: linear-gradient(45deg, #ff6a00, #ff3c00);
             border: none;
-            padding: 12px 28px;
+            padding: 12px 30px;
             border-radius: 50px;
             font-weight: 600;
-            transition: 0.3s;
+            transition: 0.4s;
         }
 
         .btn-main:hover {
             transform: scale(1.05);
         }
 
-        /* SECTIONS */
         .section-title {
             font-weight: 700;
-            margin-bottom: 40px;
-            font-size: clamp(22px, 4vw, 36px);
+            margin-bottom: 50px;
         }
 
         .feature-box {
             background: #1a1a1a;
-            padding: 30px 20px;
+            padding: 30px;
             border-radius: 20px;
-            transition: 0.3s;
-            height: 100%;
+            transition: 0.4s;
         }
 
         .feature-box:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px);
             background: #222;
         }
 
         .feature-icon {
-            font-size: 36px;
+            font-size: 40px;
             color: #ff6a00;
             margin-bottom: 15px;
         }
 
         .app-preview img {
-            width: 100%;
-            max-width: 450px;
             border-radius: 25px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
 
         .gallery img {
-            width: 100%;
             border-radius: 20px;
-            transition: 0.3s;
+            transition: 0.4s;
         }
 
         .gallery img:hover {
-            transform: scale(1.05);
+            transform: scale(1.07);
         }
 
         footer {
             background: #000;
-            padding: 20px 0;
-            font-size: 14px;
-        }
-
-        /* MOBILE FIX */
-        @@media (max-width: 768px) {
-            .hero {
-                padding-top: 140px;
-            }
-
-            .navbar-collapse {
-                background: #000;
-                padding: 15px;
-                border-radius: 10px;
-                margin-top: 10px;
-            }
+            padding: 30px 0;
         }
     </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="#">🏍️ TravelBuddy</a>
-
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#menu"
-                aria-controls="menu"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="menu">
-            <ul class="navbar-nav ms-auto text-center">
+            <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-                <li class="nav-item"><a class="nav-link" href="/Account/Login">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="/Travel/logincommunity">Community</a></li>
+                <li class="nav-item"><a class="nav-link" href="#screens">Screens</a></li>
+                @* <li class="nav-item"><a class="nav-link" href="#download">Download</a></li> *@
+                <li class="nav-item"><a class="nav-link" href="/Travel/CreateCommunity">Community</a></li>
+                
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- HERO -->
+<!-- Hero -->
 <section class="hero">
     <div class="container" data-aos="fade-up">
         <h1>Ride Smarter with <span class="highlight">TravelBuddy</span></h1>
-        <p class="lead mt-3">
-            Live Location Tracking • Group Chat • Voice Communication • SOS Alerts
-        </p>
+        <p class="lead mt-3">Live Location Tracking • Group Chat • Voice Communication • SOS Alerts</p>
         <a href="#download" class="btn btn-main mt-4">Start Your Journey</a>
     </div>
 </section>
 
-<!-- FEATURES -->
+<!-- Features -->
 <section id="features" class="py-5">
     <div class="container text-center">
         <h2 class="section-title">Powerful Ride Features</h2>
         <div class="row g-4">
-            <div class="col-12 col-md-4" data-aos="fade-up">
+            <div class="col-md-4" data-aos="fade-up">
                 <div class="feature-box">
                     <div class="feature-icon"><i class="fa-solid fa-location-dot"></i></div>
                     <h5>Live Tracking</h5>
                     <p>Track every biker in real-time with interactive maps.</p>
                 </div>
             </div>
-            <div class="col-12 col-md-4" data-aos="fade-up">
+            <div class="col-md-4" data-aos="fade-up">
                 <div class="feature-box">
                     <div class="feature-icon"><i class="fa-solid fa-comments"></i></div>
                     <h5>Group Chat</h5>
                     <p>Instant messaging for smooth ride coordination.</p>
                 </div>
             </div>
-            <div class="col-12 col-md-4" data-aos="fade-up">
+            <div class="col-md-4" data-aos="fade-up">
                 <div class="feature-box">
                     <div class="feature-icon"><i class="fa-solid fa-microphone"></i></div>
                     <h5>Voice Talk</h5>
@@ -225,40 +175,40 @@
     </div>
 </section>
 
-<!-- APP PREVIEW -->
+<!-- App Preview -->
 <section class="py-5 bg-dark">
     <div class="container">
-        <div class="row align-items-center text-center text-md-start">
-            <div class="col-12 col-md-6 mb-4 mb-md-0" data-aos="fade-right">
+        <div class="row align-items-center">
+            <div class="col-md-6" data-aos="fade-right">
                 <h2 class="fw-bold">Smart Ride Dashboard</h2>
-                <p>Monitor speed, manage group members, send SOS alerts and manage routes effortlessly.</p>
+                <p>Monitor speed, view group members, send SOS alerts and manage routes effortlessly.</p>
             </div>
-            <div class="col-12 col-md-6 text-center app-preview" data-aos="fade-left">
-                <img src="https://images.unsplash.com/photo-1516826957135-700dedea698c" alt="App Preview">
+            <div class="col-md-6 text-center app-preview" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1516826957135-700dedea698c" class="img-fluid" alt="App Preview">
             </div>
         </div>
     </div>
 </section>
 
-<!-- GALLERY -->
+<!-- Gallery -->
 <section id="screens" class="py-5">
     <div class="container text-center">
         <h2 class="section-title">Adventure Moments</h2>
-        <div class="row g-4 gallery">
-            <div class="col-12 col-md-4" data-aos="zoom-in">
-                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a">
+        <div class="row gallery g-4">
+            <div class="col-md-4" data-aos="zoom-in">
+                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a" class="img-fluid">
             </div>
-            <div class="col-12 col-md-4" data-aos="zoom-in">
-                <img src="https://images.unsplash.com/photo-1493238792000-8113da705763">
+            <div class="col-md-4" data-aos="zoom-in">
+                <img src="https://images.unsplash.com/photo-1493238792000-8113da705763" class="img-fluid">
             </div>
-            <div class="col-12 col-md-4" data-aos="zoom-in">
-                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+            <div class="col-md-4" data-aos="zoom-in">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" class="img-fluid">
             </div>
         </div>
     </div>
 </section>
 
-<!-- DOWNLOAD -->
+<!-- Download -->
 <section id="download" class="py-5 text-center bg-dark">
     <div class="container" data-aos="fade-up">
         <h2 class="fw-bold">Download TravelBuddy Now</h2>
@@ -267,20 +217,21 @@
     </div>
 </section>
 
-<!-- FOOTER -->
+<!-- Footer -->
 <footer class="text-center">
     <div class="container">
         <p>© 2026 TravelBuddy | Built for Passionate Riders 🏍️</p>
     </div>
 </footer>
 
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-    AOS.init({
-        duration: 1000,
-        once: true
-    });
+AOS.init({
+    duration: 1000,
+    once: true
+});
 </script>
 
 </body>

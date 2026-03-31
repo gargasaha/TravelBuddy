@@ -167,8 +167,13 @@
                 <!-- Optional error message area (Razor binding) -->
                 
 
-                <form method="post" asp-page-handler="Login">
-                    
+                <form method="post" asp-action="Login" asp-controller="Account">
+                    @if(TempData["Message"]!=null){
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["Message"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
                     <!-- Username Field -->
                     <div class="mb-4">
                         <label for="Username" class="form-label">Username</label>
@@ -179,8 +184,8 @@
                             <input type="text" 
                                    class="form-control" 
                                    id="Username" 
-                                   name="Username" 
-                                   placeholder="Enter your username" 
+                                   name="email" 
+                                   placeholder="Enter your email" 
                                    required 
                                    autofocus />
                         </div>
@@ -196,7 +201,7 @@
                             <input type="password" 
                                    class="form-control" 
                                    id="Password" 
-                                   name="Password" 
+                                   name="password" 
                                    placeholder="Enter your password" 
                                    required />
                             <button class="input-group-text password-toggle border-0 bg-transparent" 

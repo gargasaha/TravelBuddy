@@ -40,15 +40,18 @@ public class TravelController : Controller
         return RedirectToAction("Index");
     }
 
-    [HttpGet("/Travel/LoginCommunity")]
-    public IActionResult LoginCommunity()
-    {
-        return View("LoginCommunity");
-    }
-
-
+    
     public IActionResult Index()
     {
+        var username=Request.Cookies["username"];
+        if (username != null)
+        {
+            TempData["username"]=username;
+        }
+        else
+        {
+            TempData["username"]=null;
+        }
         return View();
     }
 

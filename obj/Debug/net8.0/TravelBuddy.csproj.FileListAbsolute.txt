@@ -6,7 +6,6 @@ C:\Users\sahag\OneDrive\Desktop\c#\TravelBuddy\obj\Debug\net8.0\TravelBuddy.cspr
 C:\Users\sahag\OneDrive\Desktop\c#\TravelBuddy\obj\Debug\net8.0\TravelBuddy.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\sahag\OneDrive\Desktop\c#\TravelBuddy\obj\Debug\net8.0\TravelBuddy.RazorAssemblyInfo.cache
 C:\Users\sahag\OneDrive\Desktop\c#\TravelBuddy\obj\Debug\net8.0\TravelBuddy.RazorAssemblyInfo.cs
-C:\Users\sahag\OneDrive\Desktop\c#\TravelBuddy\obj\Debug\net8.0\TravelBuddy.sourcelink.json
 C:\Users\sahag\OneDrive\Desktop\c#\TravelBuddy\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\sahag\OneDrive\Desktop\c#\TravelBuddy\bin\Debug\net8.0\appsettings.json
 C:\Users\sahag\OneDrive\Desktop\c#\TravelBuddy\bin\Debug\net8.0\TravelBuddy.staticwebassets.runtime.json

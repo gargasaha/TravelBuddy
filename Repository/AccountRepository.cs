@@ -27,5 +27,30 @@ namespace TravelBuddy.Repository
                 return false;
             }
         }
+        public string getUserName(string email)
+        {
+            string name=db.Usr.Where(x=>x.email==email).Select(x=>x.name).FirstOrDefault();
+            return name;
+        }
+        public bool validateUser(string email, string password)
+        {
+            try
+            {
+                var numb=db.Usr.Count(x=>x.email==email && x.password==password);
+                if (numb == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+            }
+        }
     }
 }

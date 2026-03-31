@@ -28,18 +28,21 @@ namespace TravelBuddy.Controllers
                     usr.uimage = memoryStream.ToArray();
                 }
             }
-            Console.WriteLine(usr == null);
+            // Console.WriteLine(usr == null);
             bool res=accountRepository.saveUser(usr);
             if(res)
             {
                 Response.Cookies.Delete("email");
+                Response.Cookies.Delete("username");
                 Response.Cookies.Append("email", usr.email);
+                Response.Cookies.Append("username", usr.name);
                 ViewData["Message"]="User registered successfully!";
                 return RedirectToAction("Login");
             }
             else
             {
-                ViewData["Message"]="Email already exists";
+                TempData["Message"]="Email already exists";
+                // Console.WriteLine("Email already exists");
                 return RedirectToAction("CreateUsr");
             }
         }
@@ -54,6 +57,33 @@ namespace TravelBuddy.Controllers
                 return View("LoginUsr");
             }
             return View("LoginUsr");
+        }
+        [HttpPost]
+        public IActionResult Login(string email,string password)
+        {
+            bool res=accountRepository.validateUser(email,password);
+            if(res)
+            {
+                string username=accountRepository.getUserName(email);
+                Response.Cookies.Delete("email");
+                Response.Cookies.Delete("username");
+                Response.Cookies.Append("email", email);
+                Response.Cookies.Append("username", username);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                TempData["Message"]="Invalid email or password";
+                return RedirectToAction("Login");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("email");
+            Response.Cookies.Delete("username");
+            return RedirectToAction("Index", "Travel");
         }
 
     }

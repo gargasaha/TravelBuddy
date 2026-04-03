@@ -4,8 +4,10 @@ namespace TravelBuddy.Models
 {
     public class Usr
     {
+        
         [Key]
-        public int id { get; set; }
+        [StringLength(100)]
+        public string ?email { get; set; }
         
         [Required]
         [StringLength(100)]
@@ -14,12 +16,10 @@ namespace TravelBuddy.Models
         [Required]
         public byte[] ?uimage{get;set;}
         
-        [Required]
-        [EmailAddress]
-        public string ?email { get; set; }
         
         [Required]
         [StringLength(100)]
         public string ?password { get; set; }
+        public ICollection<Community> ?communities { get; set; }
     }
 }

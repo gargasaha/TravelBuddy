@@ -37,7 +37,7 @@ public class TravelController : Controller
             ViewData["Message"]="Community created successfully!";
             return View();
         }
-        return RedirectToAction("Index");
+        return RedirectToAction("Index","Home");
     }
 
     

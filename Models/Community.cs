@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace TravelBuddy.Models
 {
@@ -7,17 +9,24 @@ namespace TravelBuddy.Models
     {
         [Key]
         public int cid { get; set; }
+
         [NotNull]
         [StringLength(100)]
-        public string ?cname { get; set; }
+        public string? cname { get; set; }
+
         [NotNull]
         [StringLength(100)]
-        public string ?cpassword {get;set;}
-        [NotNull]
-        public byte[] ?cimage { get; set; }
+        public string? cpassword { get; set; }
+
+        [Column(TypeName = "varbinary(max)")]
+        public byte[]? cimage { get; set; }
+
         [NotNull]
         [StringLength(100)]
-        public string ?cemail { get; set; }
+        public string? cemail { get; set; }
+
+        [ForeignKey("cemail")]
+        public Usr? usr { get; set; }
     }
     
 }

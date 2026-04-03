@@ -69,6 +69,7 @@ namespace TravelBuddy.Controllers
                 Response.Cookies.Delete("username");
                 Response.Cookies.Append("email", email);
                 Response.Cookies.Append("username", username);
+                TempData["email"]=email;
                 return RedirectToAction("Index", "Home");
             }
             else

@@ -1,5 +1,6 @@
 using TravelBuddy.Models;
 using TravelBuddy.Data;
+using TravelBuddy.DTOs;
 namespace TravelBuddy.Repository
 {
     public class AccountRepository:IAccountRepository
@@ -27,9 +28,30 @@ namespace TravelBuddy.Repository
                 return false;
             }
         }
+        public byte[] getUserProfilePic(string email)
+        {
+            byte[] profilePic = null;
+            try
+            {
+                profilePic=db.Usr.Where(x=>x.email==email).Select(x=>x.uimage).FirstOrDefault() ?? null;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return profilePic;
+        }
         public string getUserName(string email)
         {
-            string name=db.Usr.Where(x=>x.email==email).Select(x=>x.name).FirstOrDefault();
+            string name = string.Empty;
+            try
+            {
+                name = db.Usr.Where(x=>x.email==email).Select(x=>x.name).FirstOrDefault() ?? string.Empty;    
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             return name;
         }
         public bool validateUser(string email, string password)
@@ -51,6 +73,19 @@ namespace TravelBuddy.Repository
                 Console.WriteLine(ex.ToString());
                 return false;
             }
+        }
+        public List<cIdAndCnameDto> getCommunityResult(string email)
+        {
+            List<cIdAndCnameDto> communityDtos = new List<cIdAndCnameDto>();
+            try
+            {
+                communityDtos = db.Community.Where(c=>c.cemail==email).Select(c=>new cIdAndCnameDto { cid = c.cid, cname = c.cname, cimage = c.cimage }).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return communityDtos;
         }
     }
 }

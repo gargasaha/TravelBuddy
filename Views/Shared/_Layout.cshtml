@@ -7,31 +7,89 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TravelBuddy.styles.css" asp-append-version="true" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
 </head>
 <body>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+            body {
+                background-color: #f5f5f5;
+            }
+        
+            .navbar {
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+        
+            .profile-img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        
+            .dropdown-toggle::after {
+                content: none;
+            }
+    </style>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TravelBuddy</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
-                        </li>
-                    </ul>
+                <span class="navbar-brand mb-0 h1">TravelBuddy</span>
+                <div class="d-flex align-items-center gap-3 ms-auto">
+                    <button class="btn btn-link text-white position-relative" type="button" title="Notifications">
+                        🔔
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                        </span>
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-link text-white dropdown-toggle d-flex align-items-center gap-2" type="button"
+                                data-bs-toggle="dropdown">
+                            <img src="https://via.placeholder.com/40" id="profileImg" alt="Profile" class="profile-img">
+                            <span id="profileName">@User.Identity?.Name ?? "Guest"</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">👤 View Profile</a></li>
+                            <li><a class="dropdown-item" href="#">⚙️ Settings</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form method="post" action="/Account/Logout" style="margin: 0;">
+                                    <button type="submit" class="dropdown-item text-danger">🚪 Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
+
+    <script>
+        $(document).ready(function () {
+            
+            var email = Cookies.get('email');
+            var name = Cookies.get('username');
+            $('#profileImg').attr('src', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif');
+            $('#profileName').text(name);
+            
+            $.ajax({
+                url: '/Home/getUserProfilePic/' + email,
+                method: 'GET',
+                success: function (data) {
+                    $('#profileImg').attr('src', 'data:image/png;base64,' + data.profilePictureUrl);
+                    $('#profileImg').css('opacity', '1');
+                },
+                error: function () {
+                    console.error('Failed to load user profile');
+                    $('#profileImg').css('opacity', '1');
+                }
+            });
+        });
+    </script>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -39,11 +97,11 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @* <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2026 - TravelBuddy - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

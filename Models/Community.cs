@@ -27,6 +27,8 @@ namespace TravelBuddy.Models
 
         [ForeignKey("cemail")]
         public Usr? usr { get; set; }
+        public ICollection<Ride> ?rides { get; set; }
+        public ICollection<CommunityChat> ?communityChats { get; set; }
     }
     
 }

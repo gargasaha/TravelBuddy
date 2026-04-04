@@ -7,14 +7,10 @@ namespace TravelBuddy.Controllers;
 
 public class TravelController : Controller
 {
-    private readonly ILogger<TravelController> _logger;
-    private readonly IConfiguration _configuration;
-    private TravelRepository travelDAL;
-    public TravelController(ILogger<TravelController> logger, IConfiguration configuration)
+    private ITravelRepository travelRepository;
+    public TravelController(ITravelRepository travelRepository)
     {
-        _logger = logger;
-        _configuration = configuration;
-        travelDAL=new TravelRepository(_configuration);
+        this.travelRepository = travelRepository;
     }
     [HttpGet("/Travel/CreateCommunity")]
     public IActionResult CreateCommunity()
@@ -26,7 +22,7 @@ public class TravelController : Controller
     public async Task<IActionResult> CreateCommunity(Community community,IFormFile ImageFile)
     {
         // Console.WriteLine("Received community data: " + community.cname + ", " + community.cemail+ ", ImageFile: " + (ImageFile != null ? ImageFile.FileName : "No file")+community.cpassword);
-        var i=await travelDAL.registerCommunity(community,ImageFile);
+        var i=await travelRepository.registerCommunity(community,ImageFile);
         if (i == -1)
         {
             ViewData["Message"]="Email already exists. Please use a different email.";
@@ -39,7 +35,13 @@ public class TravelController : Controller
         }
         return RedirectToAction("Index","Home");
     }
-
+    [HttpGet("/Travel/CommunityDetails/{cid}")]
+    public IActionResult CommunityDetails(int cid)
+    {
+        Response.Cookies.Append("cid", cid.ToString());
+        ViewData["Message"] = null;
+        return View();
+    }
     
     public IActionResult Index()
     {
@@ -52,6 +54,19 @@ public class TravelController : Controller
         {
             TempData["username"]=null;
         }
+        return View();
+    }
+    [HttpPost("Travel/SendMessage")]
+    public JsonResult SendMessage(string message)
+    {
+        Console.WriteLine("Message: {0}, Email: {1}, CID: {2}", message, Request.Cookies["email"], Request.Cookies["cid"]);
+        // bool response=
+        return Json(new { success = true });
+    }
+
+    [HttpGet("/Travel/CreateRide")]
+    public IActionResult CreateRide()
+    {
         return View();
     }
 

@@ -1,0 +1,177 @@
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+<style>
+    .fab-container {
+        position: fixed;
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 16px;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        max-width: min(560px, calc(100vw - 32px));
+    }
+
+    .quick-message-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1 1 auto;
+        min-width: 0;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 999px;
+        padding: 8px 10px 8px 14px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(4px);
+    }
+
+    .quick-message-input {
+        flex: 1 1 auto;
+        min-width: 0;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 14px;
+        color: #111827;
+    }
+
+    .quick-message-input::placeholder {
+        color: #6b7280;
+    }
+
+    .icon-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        color: #fff;
+        font-size: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        transition: transform .2s ease, filter .2s ease;
+    }
+
+    .icon-btn.attach {
+        background: linear-gradient(135deg, #0ea5e9, #0284c7);
+        box-shadow: 0 6px 14px rgba(14, 165, 233, 0.35);
+    }
+
+    .icon-btn.send {
+        background: linear-gradient(135deg, #10b981, #059669);
+        box-shadow: 0 6px 14px rgba(16, 185, 129, 0.35);
+    }
+
+    .icon-btn:hover {
+        transform: translateY(-2px) scale(1.03);
+        filter: brightness(1.05);
+    }
+
+    .create-community-btn {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 26px;
+        color: #fff;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        box-shadow: 0 10px 24px rgba(99, 102, 241, .45), 0 4px 10px rgba(0, 0, 0, .2);
+        border: 2px solid rgba(255, 255, 255, .35);
+        transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+        flex: 0 0 auto;
+    }
+
+    .create-community-btn:hover {
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 14px 28px rgba(99, 102, 241, .55), 0 6px 14px rgba(0, 0, 0, .25);
+        filter: brightness(1.05);
+    }
+
+    @@media (max-width: 768px) {
+        .fab-container {
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            bottom: 12px;
+            max-width: calc(100vw - 24px);
+        }
+
+        .quick-message-box {
+            padding: 8px;
+            gap: 6px;
+        }
+
+        .quick-message-input {
+            font-size: 13px;
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+        }
+
+        .create-community-btn {
+            width: 50px;
+            height: 50px;
+            font-size: 22px;
+        }
+    }
+
+    @@media (max-width: 420px) {
+        .quick-message-input::placeholder {
+            font-size: 12px;
+        }
+
+        .create-community-btn {
+            width: 46px;
+            height: 46px;
+            font-size: 20px;
+        }
+    }
+</style>
+
+<div class="fab-container">
+    <div class="quick-message-box">
+        <input type="text" class="quick-message-input" id="quickMessage" placeholder="Type a message..." />
+        <button type="button" class="icon-btn attach" id="attachMediaBtn" title="Attach media">📎</button>
+        <button type="button" class="icon-btn send" id="sendMessageBtn" title="Send message">➤</button>
+    </div>
+
+    <a href="/Travel/CreateRide" class="create-community-btn" title="Create a new ride">
+        🏍️
+    </a>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#sendMessageBtn').on('click', function (e) {
+            e.preventDefault();
+
+            var message = $('#quickMessage').val().trim();
+            if (!message) {
+                return;
+            }
+
+            $.ajax({
+                url: '/Travel/SendMessage/',
+                method: 'POST',
+                data: { message: message },
+                success: function (res) {
+                    console.log('Message sent successfully:', res);
+                    $('#quickMessage').val('');
+                },
+                error: function (err) {
+                    console.error('Error sending message:', err);
+                }
+            });
+        });
+    });
+</script>

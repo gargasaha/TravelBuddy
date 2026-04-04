@@ -1,14 +1,18 @@
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using TravelBuddy.Models;
+using TravelBuddy.Data;
 namespace TravelBuddy.Repository{
-    public class TravelRepository{
+    public class TravelRepository:  ITravelRepository{
         private readonly IConfiguration _configuration;
         private SqlDataReader ?rd;
         private SqlConnection ?conn;
         private SqlCommand ?cmd;
-        public TravelRepository(IConfiguration configuration)
+        public readonly DBContext db;
+        public TravelRepository(DBContext context)
         {
-            _configuration = configuration;
+            db=context;
+            _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
         }
         public async Task<int> registerCommunity(Community community, IFormFile ImageFile)
         {
@@ -53,7 +57,7 @@ namespace TravelBuddy.Repository{
             return 0;
         }
 
-        private async Task<byte[]> GetImageBytes(IFormFile imageFile)
+        public async Task<byte[]> GetImageBytes(IFormFile imageFile)
         {
             using var ms = new MemoryStream();
             await imageFile.CopyToAsync(ms);

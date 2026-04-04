@@ -21,5 +21,7 @@ namespace TravelBuddy.Models
         [StringLength(100)]
         public string ?password { get; set; }
         public ICollection<Community> ?communities { get; set; }
+        public ICollection<Ride> ?rides { get; set; }
+        public ICollection<CommunityChat> ?communityChats { get; set; }
     }
 }

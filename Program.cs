@@ -8,7 +8,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("db"))); 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-
+builder.Services.AddScoped<ITravelRepository, TravelRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

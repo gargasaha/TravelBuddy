@@ -110,9 +110,40 @@
             </div>
         </div>
     </div>
-    <div class="fab-container">
-        <a href="/Travel/CreateCommunity" style="text-decoration: none;" class="create-community-btn" title="Create a new community">
+    <div class="container py-0">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                
+                <div class="d-flex gap-2 mb-4">
+                    <button class="btn btn-outline-primary" type="button"
+                            aria-expanded="false" aria-controls="collapseExample" id="rideBtn">
+                        Rides
+                    </button>
+                </div>
+                
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body" id="communitiesContainer" style="background-color: #f8f9fa;">
+                        <div id="rideList">
+                            hii
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fab-container" style="display: flex; gap: 14px; align-items: center;">
+        <a href="/Travel/CreateCommunity"
+           style="text-decoration: none;"
+           class="create-community-btn"
+           title="Create a new community">
             👥
+        </a>
+
+        <a href="/Travel/CreateRide"
+           style="text-decoration: none;"
+           class="create-community-btn"
+           title="Create a new ride">
+            🏍️
         </a>
     </div>
     <!-- ...existing code... -->

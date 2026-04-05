@@ -60,7 +60,8 @@ public class TravelController : Controller
     public JsonResult SendMessage(string message)
     {
         Console.WriteLine("Message: {0}, Email: {1}, CID: {2}", message, Request.Cookies["email"], Request.Cookies["cid"]);
-        // bool response=
+        bool response=travelRepository.sendMessage(message,Request.Cookies["email"],Convert.ToInt32(Request.Cookies["cid"]));
+        Console.WriteLine(response);
         return Json(new { success = true });
     }
 

@@ -19,11 +19,11 @@ namespace TravelBuddy.Models
         public DateTime rideStartTime { get; set; }
         [Required]
         public DateTime rideEndTime { get; set; }
-        [ForeignKey("rideGroupLeaderEmail")]
         public string ?rideGroupLeaderEmail { get; set; }
-        [ForeignKey("communityId")]
         public int ?communityId { get; set; }
+        [ForeignKey("rideGroupLeaderEmail")]
         public Usr ?usr { get; set; }
+        [ForeignKey("communityId")]
         public Community ?community { get; set; }
     }
 }

@@ -63,5 +63,27 @@ namespace TravelBuddy.Repository{
             await imageFile.CopyToAsync(ms);
             return ms.ToArray();
         }
+        public bool sendMessage(string message, string ?email, int cid)
+        {
+            try
+            {
+                db.CommunityChat.Add(new CommunityChat
+                {
+                    communityId = cid,
+                    usrEmail = email,
+                    message = message,
+                    timestamp = DateTime.Now
+                });
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error sending message: " + ex.Message);
+                return false;
+            }
+
+            return false;
+        }
     }
 }

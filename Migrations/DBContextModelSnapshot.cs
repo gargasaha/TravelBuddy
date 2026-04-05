@@ -22,6 +22,22 @@ namespace TravelBuddy.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("TravelBuddy.Models.ChatFile", b =>
+                {
+                    b.Property<int>("chatid")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("chatid"));
+
+                    b.Property<byte[]>("fileData")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("chatid");
+
+                    b.ToTable("ChatFile");
+                });
+
             modelBuilder.Entity("TravelBuddy.Models.Community", b =>
                 {
                     b.Property<int>("cid")
@@ -63,29 +79,26 @@ namespace TravelBuddy.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("communityChatId"));
 
-                    b.Property<int>("cid")
+                    b.Property<int>("communityId")
                         .HasColumnType("int");
-
-                    b.Property<int?>("communitycid")
-                        .HasColumnType("int");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("message")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("usremail")
+                    b.Property<DateTime>("timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("usrEmail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("communityChatId");
 
-                    b.HasIndex("communitycid");
+                    b.HasIndex("communityId");
 
-                    b.HasIndex("usremail");
+                    b.HasIndex("usrEmail");
 
                     b.ToTable("CommunityChat");
                 });
@@ -113,7 +126,7 @@ namespace TravelBuddy.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("rideGroupLeaderEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("rideStartLatitude")
                         .IsRequired()
@@ -126,14 +139,11 @@ namespace TravelBuddy.Migrations
                     b.Property<DateTime>("rideStartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("usremail")
-                        .HasColumnType("nvarchar(100)");
-
                     b.HasKey("rideId");
 
                     b.HasIndex("communityId");
 
-                    b.HasIndex("usremail");
+                    b.HasIndex("rideGroupLeaderEmail");
 
                     b.ToTable("Ride");
                 });
@@ -168,7 +178,7 @@ namespace TravelBuddy.Migrations
                     b.HasOne("TravelBuddy.Models.Usr", "usr")
                         .WithMany("communities")
                         .HasForeignKey("cemail")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("usr");
@@ -178,11 +188,15 @@ namespace TravelBuddy.Migrations
                 {
                     b.HasOne("TravelBuddy.Models.Community", "community")
                         .WithMany("communityChats")
-                        .HasForeignKey("communitycid");
+                        .HasForeignKey("communityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TravelBuddy.Models.Usr", "usr")
                         .WithMany("communityChats")
-                        .HasForeignKey("usremail");
+                        .HasForeignKey("usrEmail")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("community");
 
@@ -197,7 +211,7 @@ namespace TravelBuddy.Migrations
 
                     b.HasOne("TravelBuddy.Models.Usr", "usr")
                         .WithMany("rides")
-                        .HasForeignKey("usremail");
+                        .HasForeignKey("rideGroupLeaderEmail");
 
                     b.Navigation("community");
 

@@ -12,6 +12,19 @@ namespace TravelBuddy.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "ChatFile",
+                columns: table => new
+                {
+                    chatid = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    fileData = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChatFile", x => x.chatid);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Usr",
                 columns: table => new
                 {
@@ -44,7 +57,7 @@ namespace TravelBuddy.Migrations
                         column: x => x.cemail,
                         principalTable: "Usr",
                         principalColumn: "email",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,25 +66,26 @@ namespace TravelBuddy.Migrations
                 {
                     communityChatId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    cid = table.Column<int>(type: "int", nullable: false),
-                    communitycid = table.Column<int>(type: "int", nullable: true),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    usremail = table.Column<string>(type: "nvarchar(100)", nullable: true),
-                    message = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                    communityId = table.Column<int>(type: "int", nullable: false),
+                    usrEmail = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    message = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CommunityChat", x => x.communityChatId);
                     table.ForeignKey(
-                        name: "FK_CommunityChat_Community_communitycid",
-                        column: x => x.communitycid,
+                        name: "FK_CommunityChat_Community_communityId",
+                        column: x => x.communityId,
                         principalTable: "Community",
-                        principalColumn: "cid");
+                        principalColumn: "cid",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CommunityChat_Usr_usremail",
-                        column: x => x.usremail,
+                        name: "FK_CommunityChat_Usr_usrEmail",
+                        column: x => x.usrEmail,
                         principalTable: "Usr",
-                        principalColumn: "email");
+                        principalColumn: "email",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,9 +100,8 @@ namespace TravelBuddy.Migrations
                     rideEndLongitude = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     rideStartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     rideEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    rideGroupLeaderEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    communityId = table.Column<int>(type: "int", nullable: true),
-                    usremail = table.Column<string>(type: "nvarchar(100)", nullable: true)
+                    rideGroupLeaderEmail = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    communityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,8 +112,8 @@ namespace TravelBuddy.Migrations
                         principalTable: "Community",
                         principalColumn: "cid");
                     table.ForeignKey(
-                        name: "FK_Ride_Usr_usremail",
-                        column: x => x.usremail,
+                        name: "FK_Ride_Usr_rideGroupLeaderEmail",
+                        column: x => x.rideGroupLeaderEmail,
                         principalTable: "Usr",
                         principalColumn: "email");
                 });
@@ -111,14 +124,14 @@ namespace TravelBuddy.Migrations
                 column: "cemail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommunityChat_communitycid",
+                name: "IX_CommunityChat_communityId",
                 table: "CommunityChat",
-                column: "communitycid");
+                column: "communityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommunityChat_usremail",
+                name: "IX_CommunityChat_usrEmail",
                 table: "CommunityChat",
-                column: "usremail");
+                column: "usrEmail");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ride_communityId",
@@ -126,14 +139,17 @@ namespace TravelBuddy.Migrations
                 column: "communityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ride_usremail",
+                name: "IX_Ride_rideGroupLeaderEmail",
                 table: "Ride",
-                column: "usremail");
+                column: "rideGroupLeaderEmail");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ChatFile");
+
             migrationBuilder.DropTable(
                 name: "CommunityChat");
 
